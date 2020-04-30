@@ -398,3 +398,20 @@ echo 'www-data:www-data' | chpasswd
 usermod -s /bin/bash www-data
 sudo cp /vagrant/vagrant/sshd_config /etc/ssh/sshd_config
 service ssh restart
+
+
+echo "##################################################"
+echo "############ SETTING MYSQL CONFIGS ################"
+echo "##################################################"
+echo "
+[client]
+default-character-set=utf8
+
+[mysql]
+default-character-set=utf8
+
+[mysqld]
+collation-server = utf8_unicode_ci
+character-set-server = utf8
+default_authentication_plugin = mysql_native_password
+" > /etc/mysql/my.cnf
