@@ -384,6 +384,8 @@ echo 'phpmyadmin phpmyadmin/mysql/app-pass password root' | debconf-set-selectio
 echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections > /tmp/ignoreme
 apt-get install -y  php-gettext phpmyadmin > /tmp/ignoreme
 
+sudo sed -i "s/|\s*\((count(\$analyzed_sql_results\['select_expr'\]\)/| (\1)/g" /usr/share/phpmyadmin/libraries/sql.lib.php
+
 
 # Restart apache
 echo "#############################"
@@ -403,6 +405,8 @@ service ssh restart
 echo "##################################################"
 echo "############ SETTING MYSQL CONFIGS ################"
 echo "##################################################"
+echo " "  > /etc/mysql/my.cnf
+echo " "  > /etc/mysql/my.cnf
 echo "
 [client]
 default-character-set=utf8
@@ -415,3 +419,8 @@ collation-server = utf8_unicode_ci
 character-set-server = utf8
 default_authentication_plugin = mysql_native_password
 " > /etc/mysql/my.cnf
+
+echo "####################################################"
+echo "############ VAGRANT SETUP COMPLETE ################"
+echo "####################################################"
+echo "Run 'vagrant ssh' to login into the vagrant"

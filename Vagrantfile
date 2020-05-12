@@ -14,17 +14,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
   
   # box name.  Any box from vagrant share or a box from a custom URL. 
-  config.vm.box = "ubuntu/focal64"
+  config.vm.box = "ubuntu/xenial64"
   config.disksize.size = '150GB'
   # box modifications, including memory limits and box name. 
   config.vm.provider "virtualbox" do |vb|
-     vb.name = "ultimatePhpBox"
+     vb.name = "ultimatePhpBox16"
      vb.memory = 4048
 	 vb.cpus = 2
   end
 
   ## IP to access box
-  config.vm.network "private_network", ip: "192.168.33.12"
+  config.vm.network "private_network", ip: "192.168.33.16"
 
   #config.vm.synced_folder ".", "/vagrant", nfs:false, :mount_options => ["dmode=777","fmode=666"]
   ## Bootstrap script to provision box.  All installation methods can go here.
