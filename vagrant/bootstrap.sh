@@ -419,8 +419,3 @@ collation-server = utf8_unicode_ci
 character-set-server = utf8
 default_authentication_plugin = mysql_native_password
 " > /etc/mysql/my.cnf
-
-echo "####################################################"
-echo "############ VAGRANT SETUP COMPLETE ################"
-echo "####################################################"
-echo "Run 'vagrant ssh' to login into the vagrant"
