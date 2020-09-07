@@ -404,6 +404,16 @@ echo "######################################"
 sed -i "s/#network.host: .*/network.host: 127.0.0.1/" /etc/elasticsearch/elasticsearch.yml
 sed -i "s/#http.port: .*/http.port: 9200/" /etc/elasticsearch/elasticsearch.yml
 sed -i "s|#JAVA_HOME.*|JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre|" /etc/default/elasticsearch
+
+sed -i "s/#START_DAEMON=true.*/START_DAEMON=true/" /etc/default/elasticsearch
+sed -i "s/#ES_USER=elasticsearch.*/ES_USER=elasticsearch/" /etc/default/elasticsearch
+sed -i "s/#ES_GROUP=elasticsearch.*/ES_GROUP=elasticsearch/" /etc/default/elasticsearch
+sed -i "s|#LOG_DIR=/var/log/elasticsearch.*|LOG_DIR=/var/log/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#DATA_DIR=/var/lib/elasticsearch.*|DATA_DIR=/var/lib/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#WORK_DIR=/tmp/elasticsearch.*|WORK_DIR=/tmp/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#CONF_DIR=/etc/elasticsearch.*|CONF_DIR=/etc/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#CONF_FILE=/etc/elasticsearch/elasticsearch.yml.*|CONF_FILE=/etc/elasticsearch/elasticsearch.yml|" /etc/default/elasticsearch
+sed -i "s|#RESTART_ON_UPGRADE=true.*|RESTART_ON_UPGRADE=true|" /etc/default/elasticsearch
 /bin/systemctl daemon-reload
 /bin/systemctl enable elasticsearch.service
 /bin/systemctl start elasticsearch.service
