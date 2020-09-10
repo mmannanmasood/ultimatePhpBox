@@ -38,6 +38,12 @@ echo "##### INSTALLING RABBITMQ #####"
 echo "###############################"
 apt-get -y install rabbitmq-server
 
+echo "###############################"
+echo "##### CREATING RABBITMQ USER #####"
+echo "###############################"
+rabbitmqctl add_user admin admin123
+rabbitmqctl set_user_tags admin administrator
+
 echo "#################################"
 echo "##### INSTALLING open jdk 8 #####"
 echo "#################################"
@@ -48,6 +54,7 @@ echo "##### INSTALLING ElasticSearch 7 #####"
 echo "######################################"
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
+apt-get update
 apt-get install -y elasticsearch
 
 # Creating folder
@@ -401,8 +408,9 @@ sudo sed -i "s/|\s*\((count(\$analyzed_sql_results\['select_expr'\]\)/| (\1)/g" 
 echo "######################################"
 echo "###### Setting Up ElasticSearch ######"
 echo "######################################"
-sed -i "s/#network.host: .*/network.host: 127.0.0.1/" /etc/elasticsearch/elasticsearch.yml
+sed -i "s/#network.host: .*/network.host: 0.0.0.0/" /etc/elasticsearch/elasticsearch.yml
 sed -i "s/#http.port: .*/http.port: 9200/" /etc/elasticsearch/elasticsearch.yml
+echo 'discovery.type: single-node' >> /etc/elasticsearch/elasticsearch.yml
 sed -i "s|#JAVA_HOME.*|JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre|" /etc/default/elasticsearch
 
 sed -i "s/#START_DAEMON=true.*/START_DAEMON=true/" /etc/default/elasticsearch
@@ -451,3 +459,6 @@ collation-server = utf8_unicode_ci
 character-set-server = utf8
 default_authentication_plugin = mysql_native_password
 " > /etc/mysql/my.cnf
+
+
+apt-get -y upgrade && apt-get -y clean autoclean && apt-get -y autoremove
