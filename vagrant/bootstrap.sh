@@ -82,7 +82,7 @@ locale-gen en_US en_US.UTF-8 pl_PL pl_PL.UTF-8
 # Piping output to file to avoid breaking shell through bad escape characters.
 dpkg-reconfigure locales > /tmp/ignoreme
 
-# Install MySQL 5.6
+# Install MySQL 5.7
 echo "############################"
 echo "##### INSTALLING MYSQL #####"
 echo "############################"

@@ -1,6 +1,17 @@
 # ultimatePhpBox
 Vagrant Box with all php versions and phpmyadmin for mysql.
 
+> Installed Packages
+- Apache2
+- MySQL 5.7
+- Php-fpm 5.6, 7.0, 7.1, 7.2, 7.3, 7.4 with curl, bcmath, soap, cli, mysql, gd, intl, common, dev, xsl, xml, mbstring, zip, xdebug, libapache2-mod extensions.
+- RabbitMQ server
+- openjdk-8-jdk
+- ElasticSearch 7
+- Git
+- Phpmyadmin
+
+
 ## Prerequisites
 > Softwares Required:
 - [Vagrant](https://www.vagrantup.com/intro/getting-started/install.html)
@@ -12,7 +23,7 @@ Vagrant Box with all php versions and phpmyadmin for mysql.
 > Setup
 - After all the things above mentioned are done, clone this repo, open you terminal and navigate to the folder where its clonned and run vagrant up command. Now continue your work cause it will take quiet time to complete the setup.
 
-> Adding Vhosts:
+> Adding Vhosts to your host OS:
 - Open your host machine vhost file and add these line at the end and save it.
 
 ```
@@ -33,4 +44,10 @@ Vagrant Box with all php versions and phpmyadmin for mysql.
 
 # PHP 5.6
 192.168.33.16  php56.com
+```
+
+> Change php version on CLI
+- Use this command below with vagrant user and replace the x.x with the php version you want to switch on cli.
+```
+sudo update-alternatives --set php /usr/bin/phpx.x
 ```
