@@ -339,23 +339,53 @@ echo "date.timezone = America/New_York" >> /etc/php/7.4/cli/php.ini
 echo "############################"
 echo "##### CONFIGURE XDEBUG #####"
 echo "############################"
-echo "xdebug.remote_enable = 1" >> /etc/php/5.6/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/5.6/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/5.6/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.0/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.0/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.0/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.1/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.1/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.1/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.2/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.2/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.2/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.3/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.3/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.3/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.4/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.4/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.4/fpm/php.ini
 
 # Install Git
 echo "##########################"
@@ -374,12 +404,7 @@ mv composer.phar /usr/local/bin/composer
 echo "#############################################"
 echo "##### SETTING OWNERSHIP AND PERMISSIONS #####"
 echo "#############################################"
-chown -R www-data:www-data /var/www/php56.com/
-chown -R www-data:www-data /var/www/php70.com/
-chown -R www-data:www-data /var/www/php70.com/
-chown -R www-data:www-data /var/www/php72.com/
-chown -R www-data:www-data /var/www/php73.com/
-chown -R www-data:www-data /var/www/php74.com/
+chown -R www-data:www-data /var/www/
 # Add vagrant user to www-data group
 usermod -a -G www-data vagrant
 
