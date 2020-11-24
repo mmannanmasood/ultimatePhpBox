@@ -38,6 +38,12 @@ echo "##### INSTALLING RABBITMQ #####"
 echo "###############################"
 apt-get -y install rabbitmq-server
 
+echo "###############################"
+echo "##### CREATING RABBITMQ USER #####"
+echo "###############################"
+rabbitmqctl add_user admin admin123
+rabbitmqctl set_user_tags admin administrator
+
 echo "#################################"
 echo "##### INSTALLING open jdk 8 #####"
 echo "#################################"
@@ -48,6 +54,7 @@ echo "##### INSTALLING ElasticSearch 7 #####"
 echo "######################################"
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
+apt-get update
 apt-get install -y elasticsearch
 
 # Creating folder
@@ -75,7 +82,7 @@ locale-gen en_US en_US.UTF-8 pl_PL pl_PL.UTF-8
 # Piping output to file to avoid breaking shell through bad escape characters.
 dpkg-reconfigure locales > /tmp/ignoreme
 
-# Install MySQL 5.6
+# Install MySQL 5.7
 echo "############################"
 echo "##### INSTALLING MYSQL #####"
 echo "############################"
@@ -332,23 +339,53 @@ echo "date.timezone = America/New_York" >> /etc/php/7.4/cli/php.ini
 echo "############################"
 echo "##### CONFIGURE XDEBUG #####"
 echo "############################"
-echo "xdebug.remote_enable = 1" >> /etc/php/5.6/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/5.6/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/5.6/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.0/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.0/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.0/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.1/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.1/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.1/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.2/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.2/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.2/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.3/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.3/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.3/fpm/php.ini
 
-echo "xdebug.remote_enable = 1" >> /etc/php/7.4/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php/7.4/apache2/php.ini
+echo "xdebug.remote_enable = 1
+xdebug.remote_connect_back = 1
+xdebug.remote_host= '10.0.2.2'
+xdebug.idekey=PHPSTORM
+xdebug.remote_port=9010
+xdebug.remote_handler='dbgp'
+xdebug.max_nesting_level=100000" >> /etc/php/7.4/fpm/php.ini
 
 # Install Git
 echo "##########################"
@@ -367,12 +404,7 @@ mv composer.phar /usr/local/bin/composer
 echo "#############################################"
 echo "##### SETTING OWNERSHIP AND PERMISSIONS #####"
 echo "#############################################"
-chown -R www-data:www-data /var/www/php56.com/
-chown -R www-data:www-data /var/www/php70.com/
-chown -R www-data:www-data /var/www/php70.com/
-chown -R www-data:www-data /var/www/php72.com/
-chown -R www-data:www-data /var/www/php73.com/
-chown -R www-data:www-data /var/www/php74.com/
+chown -R www-data:www-data /var/www/
 # Add vagrant user to www-data group
 usermod -a -G www-data vagrant
 
@@ -401,9 +433,20 @@ sudo sed -i "s/|\s*\((count(\$analyzed_sql_results\['select_expr'\]\)/| (\1)/g" 
 echo "######################################"
 echo "###### Setting Up ElasticSearch ######"
 echo "######################################"
-sed -i "s/#network.host: .*/network.host: 127.0.0.1/" /etc/elasticsearch/elasticsearch.yml
+sed -i "s/#network.host: .*/network.host: 0.0.0.0/" /etc/elasticsearch/elasticsearch.yml
 sed -i "s/#http.port: .*/http.port: 9200/" /etc/elasticsearch/elasticsearch.yml
+echo 'discovery.type: single-node' >> /etc/elasticsearch/elasticsearch.yml
 sed -i "s|#JAVA_HOME.*|JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre|" /etc/default/elasticsearch
+
+sed -i "s/#START_DAEMON=true.*/START_DAEMON=true/" /etc/default/elasticsearch
+sed -i "s/#ES_USER=elasticsearch.*/ES_USER=elasticsearch/" /etc/default/elasticsearch
+sed -i "s/#ES_GROUP=elasticsearch.*/ES_GROUP=elasticsearch/" /etc/default/elasticsearch
+sed -i "s|#LOG_DIR=/var/log/elasticsearch.*|LOG_DIR=/var/log/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#DATA_DIR=/var/lib/elasticsearch.*|DATA_DIR=/var/lib/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#WORK_DIR=/tmp/elasticsearch.*|WORK_DIR=/tmp/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#CONF_DIR=/etc/elasticsearch.*|CONF_DIR=/etc/elasticsearch|" /etc/default/elasticsearch
+sed -i "s|#CONF_FILE=/etc/elasticsearch/elasticsearch.yml.*|CONF_FILE=/etc/elasticsearch/elasticsearch.yml|" /etc/default/elasticsearch
+sed -i "s|#RESTART_ON_UPGRADE=true.*|RESTART_ON_UPGRADE=true|" /etc/default/elasticsearch
 /bin/systemctl daemon-reload
 /bin/systemctl enable elasticsearch.service
 /bin/systemctl start elasticsearch.service
@@ -441,3 +484,6 @@ collation-server = utf8_unicode_ci
 character-set-server = utf8
 default_authentication_plugin = mysql_native_password
 " > /etc/mysql/my.cnf
+
+
+apt-get -y upgrade && apt-get -y clean autoclean && apt-get -y autoremove
